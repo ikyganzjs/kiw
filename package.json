@@ -1,0 +1,14 @@
+{
+  "name": "image-uploader",
+  "version": "1.0.0",
+  "description": "Simple image to URL uploader for Vercel",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+     "path": "^0.12.7",
+    "formidable": "^3.5.0"
+  }
+}
