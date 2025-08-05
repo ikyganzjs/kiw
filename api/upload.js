@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
     const file = files.image;
     const filename = path.basename(file.filepath);
-    const url = `/uploads/${filename}`;
+    const url = `/public/uploads/${filename}`;
     return res.status(200).json({ url });
   });
 }
