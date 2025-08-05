@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image to URL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+  <div class="bg-white p-6 rounded shadow max-w-md w-full">
+    <h2 class="text-xl font-bold mb-4">Upload Image</h2>
+    <form id="uploadForm" class="flex flex-col gap-4">
+      <input type="file" name="image" id="imageInput" accept="image/*" required />
+      <button class="bg-blue-500 text-white p-2 rounded" type="submit">Upload</button>
+    </form>
+    <div id="result" class="mt-4 hidden">
+      <p class="text-green-600 font-semibold">URL:</p>
+      <a id="imageLink" href="#" class="text-blue-500 underline" target="_blank"></a>
+      <img id="preview" class="mt-4 rounded shadow" />
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const result = document.getElementById('result');
+    const imageLink = document.getElementById('imageLink');
+    const preview = document.getElementById('preview');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        const fullUrl = `${location.origin}${data.url}`;
+        imageLink.href = fullUrl;
+        imageLink.textContent = fullUrl;
+        preview.src = fullUrl;
+        result.classList.remove('hidden');
+      } else {
+        alert(data.error || 'Upload failed');
+      }
+    });
+  </script>
+</body>
+</html>
